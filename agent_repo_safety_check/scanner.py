@@ -32,9 +32,9 @@ def run_scan(target: Path, scanned_at: str, profile: ScanProfile = "agent") -> S
             title="Read-only scan completed",
             path=".",
             evidence=f"Profile={profile}; checked items: {checked_summary}",
-            risk="この結果は危険確定ではなく、ローカル確認候補の一覧です。",
-            check_method="対象ディレクトリ内の設定ファイル名と安全に読める設定内容のみを確認しました。",
-            next_action="HIGH / MEDIUM の項目から順に、意図した設定かを手元で確認してください。",
+            risk="This report lists confirmation candidates, not proof of compromise.",
+            check_method="Checked target file names and safely readable configuration content.",
+            next_action="Review HIGH and MEDIUM findings first and confirm each setting is intentional.",
         ),
     )
     return result

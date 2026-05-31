@@ -29,8 +29,8 @@ def scan(target: Path, result: ScanResult) -> None:
             result,
             "README is missing",
             "README.md was not found.",
-            "利用者や申請レビュアーが、目的・使い方・安全な前提を確認できません。",
-            "README.md を追加し、read-only 方針、実行例、出力例、非保証範囲を記載してください。",
+            "Users and maintainers cannot confirm the purpose, usage, or safety assumptions.",
+            "Add README.md with the read-only policy, examples, output shape, and non-goals.",
         )
     else:
         result.findings.append(
@@ -39,9 +39,9 @@ def scan(target: Path, result: ScanResult) -> None:
                 title="README exists",
                 path=display_path(target, readme),
                 evidence="README file found",
-                risk="README は存在します。内容が OSS 利用者向けに十分かは別途確認してください。",
-                check_method="一般的な README ファイル名を確認しました。",
-                next_action="目的、インストール、実行例、出力例、safety notes が入っているか確認してください。",
+                risk="README exists. Review whether it is sufficient for OSS users.",
+                check_method="Checked common README file names.",
+                next_action="Confirm it explains purpose, install, examples, output, and safety notes.",
             )
         )
 
@@ -50,8 +50,8 @@ def scan(target: Path, result: ScanResult) -> None:
             result,
             "LICENSE is missing",
             "No LICENSE/COPYING file was found.",
-            "OSS として利用・再配布できる条件が不明確です。",
-            "公開前に MIT / Apache-2.0 など、意図した license を追加してください。",
+            "The terms for use and redistribution are unclear.",
+            "Add the intended license, such as MIT or Apache-2.0.",
         )
     else:
         result.findings.append(
@@ -60,9 +60,9 @@ def scan(target: Path, result: ScanResult) -> None:
                 title="LICENSE exists",
                 path=display_path(target, license_file),
                 evidence="license file found",
-                risk="license file は存在します。内容が意図した license か確認してください。",
-                check_method="一般的な license ファイル名を確認しました。",
-                next_action="README と pyproject の license 表記も合わせてください。",
+                risk="A license file exists. Confirm it is the intended license.",
+                check_method="Checked common license file names.",
+                next_action="Keep README and pyproject license metadata aligned.",
             )
         )
 
@@ -73,9 +73,9 @@ def scan(target: Path, result: ScanResult) -> None:
                 title="CI workflow is missing",
                 path=".github/workflows",
                 evidence="no workflow files found",
-                risk="OSS 利用者がテスト状態を確認しづらく、保守品質の説明が弱くなります。",
-                check_method=".github/workflows 配下の YAML ファイルを確認しました。",
-                next_action="少なくとも unit tests を走らせる GitHub Actions workflow を追加してください。",
+                risk="Users cannot easily see test status, which weakens maintenance signals.",
+                check_method="Checked for YAML files under .github/workflows.",
+                next_action="Add a GitHub Actions workflow that runs at least the unit tests.",
             )
         )
 
@@ -86,9 +86,9 @@ def scan(target: Path, result: ScanResult) -> None:
                 title="CONTRIBUTING guide is missing",
                 path=".",
                 evidence="CONTRIBUTING.md was not found",
-                risk="外部 contributor が issue / PR の出し方を判断しづらい状態です。",
-                check_method="一般的な CONTRIBUTING ファイル名を確認しました。",
-                next_action="小さなプロジェクトでも、issue/PR 方針と read-only safety policy を短く書くと安心です。",
+                risk="External contributors may not know how to file issues or pull requests.",
+                check_method="Checked common CONTRIBUTING file names.",
+                next_action="Add a short issue/PR policy and read-only safety policy.",
             )
         )
 
@@ -99,9 +99,9 @@ def scan(target: Path, result: ScanResult) -> None:
                 title="SECURITY policy is missing",
                 path=".",
                 evidence="SECURITY.md was not found",
-                risk="脆弱性報告の窓口や非公開連絡方法が分かりません。",
-                check_method="一般的な SECURITY ファイル名を確認しました。",
-                next_action="security tool として公開するなら、報告方法と対象範囲を短く書いてください。",
+                risk="Vulnerability reporting scope and private reporting expectations are unclear.",
+                check_method="Checked common SECURITY file names.",
+                next_action="Document reporting scope and how sensitive reports should be handled.",
             )
         )
 
@@ -112,9 +112,9 @@ def scan(target: Path, result: ScanResult) -> None:
                 title="Sample project directory is missing",
                 path=".",
                 evidence="samples/examples/demo directory was not found",
-                risk="利用者が安全に試すための fixture がない状態です。",
-                check_method="samples / examples / demo ディレクトリの有無を確認しました。",
-                next_action="意図的に危険パターンを入れた sample project と期待される report を用意してください。",
+                risk="Users do not have a safe fixture for trying the scanner.",
+                check_method="Checked for samples, examples, or demo directories.",
+                next_action="Add a sample project with intentional risky patterns and an expected report summary.",
             )
         )
 
@@ -134,9 +134,9 @@ def scan(target: Path, result: ScanResult) -> None:
                     title="pyproject metadata could be stronger",
                     path=display_path(target, pyproject),
                     evidence="missing metadata: " + ", ".join(missing_bits),
-                    risk="package としての説明、license、project links が不足している可能性があります。",
-                    check_method="pyproject.toml のテキストから OSS metadata 候補を確認しました。",
-                    next_action="公開前に license、classifiers、project.urls を整えてください。",
+                    risk="Package description, license, or project links may be incomplete.",
+                    check_method="Checked pyproject.toml text for common OSS metadata fields.",
+                    next_action="Add license, classifiers, and project.urls metadata as needed.",
                 )
             )
 
@@ -173,7 +173,7 @@ def _append_missing(
             path=".",
             evidence=evidence,
             risk=risk,
-            check_method="公開前 repo hygiene として一般的な必須ファイルを確認しました。",
+            check_method="Checked common repository hygiene files.",
             next_action=next_action,
         )
     )

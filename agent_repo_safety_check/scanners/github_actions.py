@@ -27,9 +27,9 @@ def scan(target: Path, result: ScanResult) -> None:
                     title="GitHub Actions id-token write permission detected",
                     path=path,
                     evidence="permissions includes id-token with write-like text",
-                    risk="OIDC を使う deploy では正当な設定ですが、意図しないクラウド認証経路がないか確認候補です。",
-                    check_method="workflow YAML のテキストから id-token と write の組み合わせを確認しました。",
-                    next_action="OIDC を使う job と信頼境界が意図どおりか確認してください。",
+                    risk="This can be valid for OIDC deploys, but it is a candidate for unintended cloud-auth paths.",
+                    check_method="Checked workflow YAML text for id-token and write permission text.",
+                    next_action="Confirm the OIDC jobs and trust boundaries are intentional.",
                 )
             )
 
@@ -40,9 +40,9 @@ def scan(target: Path, result: ScanResult) -> None:
                     title="GitHub Actions pull_request_target trigger detected",
                     path=path,
                     evidence="matched pull_request_target",
-                    risk="fork 由来の変更と repository 権限が混ざると危険な実行経路になる可能性があります。",
-                    check_method="workflow YAML のテキストから pull_request_target trigger を確認しました。",
-                    next_action="checkout 対象、secrets 利用、write permissions、外部 contributor の実行条件を確認してください。",
+                    risk="Mixing fork-originated changes with repository privileges can create dangerous execution paths.",
+                    check_method="Checked workflow YAML text for the pull_request_target trigger.",
+                    next_action="Review checkout targets, secrets use, write permissions, and external contributor execution conditions.",
                 )
             )
 
@@ -54,9 +54,9 @@ def scan(target: Path, result: ScanResult) -> None:
                     title="GitHub Actions broad write permission candidate",
                     path=path,
                     evidence="matched write permissions: " + ", ".join(broad_permissions),
-                    risk="必要以上の write 権限があると、侵害時の影響範囲が広がります。",
-                    check_method="workflow YAML の permissions らしき行から write 権限候補を確認しました。",
-                    next_action="job ごとに最小 permissions へ絞れるか確認してください。",
+                    risk="Over-broad write permissions can increase impact if a workflow is compromised.",
+                    check_method="Checked workflow YAML text for write permission candidates.",
+                    next_action="Confirm permissions can be minimized per job.",
                 )
             )
 
@@ -68,9 +68,9 @@ def scan(target: Path, result: ScanResult) -> None:
                     title="GitHub Actions uses mutable action reference",
                     path=path,
                     evidence="matched uses refs: " + ", ".join(mutable_actions[:6]),
-                    risk="main/master/latest 参照は、将来の upstream 変更で実行内容が変わる可能性があります。",
-                    check_method="uses: owner/repo@ref 形式から mutable ref 候補を確認しました。",
-                    next_action="可能なら tag や commit SHA へ固定してください。",
+                    risk="main/master/latest references can change behavior when upstream changes.",
+                    check_method="Checked uses: owner/repo@ref entries for mutable refs.",
+                    next_action="Pin to a tag or commit SHA when possible.",
                 )
             )
 
@@ -81,9 +81,9 @@ def scan(target: Path, result: ScanResult) -> None:
                     title="GitHub Actions may print sensitive context",
                     path=path,
                     evidence="matched toJSON(secrets) or broad context dump",
-                    risk="secrets やイベント payload をログに出力する可能性があります。",
-                    check_method="workflow YAML のテキストから危険な context dump 候補を確認しました。",
-                    next_action="ログ出力対象を必要最小限にし、secrets を含む context を出していないか確認してください。",
+                    risk="Secrets or event payloads may be written to logs.",
+                    check_method="Checked workflow YAML text for broad context dump candidates.",
+                    next_action="Limit logged context and confirm secrets are not printed.",
                 )
             )
 
@@ -94,9 +94,9 @@ def scan(target: Path, result: ScanResult) -> None:
                     title="GitHub Actions environment dump candidate",
                     path=path,
                     evidence="matched printenv/env style command",
-                    risk="環境変数の一覧をログに出すと、秘匿値周辺の情報が露出する可能性があります。",
-                    check_method="workflow YAML のテキストから printenv / env 系の出力候補を確認しました。",
-                    next_action="デバッグ用途なら一時的なものか、マスク済みか確認してください。",
+                    risk="Dumping environment variables can expose sensitive surrounding context.",
+                    check_method="Checked workflow YAML text for printenv/env-style output candidates.",
+                    next_action="If this is for debugging, confirm it is temporary and masked as needed.",
                 )
             )
 
@@ -107,9 +107,9 @@ def scan(target: Path, result: ScanResult) -> None:
                     title="GitHub Actions remote script execution candidate",
                     path=path,
                     evidence="matched curl/iwr piped to shell execution",
-                    risk="取得したリモートスクリプトをその場で実行する supply-chain リスクがあります。",
-                    check_method="workflow YAML のテキストから curl | sh / iwr | iex 形式を確認しました。",
-                    next_action="固定バージョン、checksum、公式 action への置換ができないか確認してください。",
+                    risk="Executing fetched remote scripts introduces supply-chain risk.",
+                    check_method="Checked workflow YAML text for curl | sh / iwr | iex patterns.",
+                    next_action="Prefer pinned versions, checksums, or official actions where possible.",
                 )
             )
 
@@ -121,9 +121,9 @@ def scan(target: Path, result: ScanResult) -> None:
                     title="GitHub Actions publish/deploy candidate",
                     path=path,
                     evidence="matched deploy terms: " + ", ".join(deploy_terms),
-                    risk="publish や deploy は認証情報・権限・実行条件の確認が必要です。",
-                    check_method="workflow YAML のテキストから publish/deploy 系コマンド候補を確認しました。",
-                    next_action="実行 branch、手動承認、permissions、secrets の使い方を確認してください。",
+                    risk="Publish and deploy steps require careful review of credentials, permissions, and trigger conditions.",
+                    check_method="Checked workflow YAML text for publish/deploy command candidates.",
+                    next_action="Review branches, manual approval, permissions, and secrets use.",
                 )
             )
 

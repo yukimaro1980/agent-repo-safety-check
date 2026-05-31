@@ -56,9 +56,9 @@ def scan(target: Path, result: ScanResult) -> None:
                     title=f"{dirname} exists",
                     path=display_path(target, directory),
                     evidence="No obvious settings/hooks/commands files were found.",
-                    risk="ディレクトリは存在しますが、MVP のファイル名ルールでは自動実行候補を検出していません。",
-                    check_method=f"{dirname} 配下のファイル名を確認しました。",
-                    next_action="必要に応じて設定ファイルの命名ルールを後続で追加してください。",
+                    risk="The directory exists, but the current filename rules did not detect obvious auto-run candidates.",
+                    check_method=f"Checked file names under {dirname}.",
+                    next_action="Add additional filename rules later if this project uses other agent config names.",
                 )
             )
             continue
@@ -73,9 +73,9 @@ def scan(target: Path, result: ScanResult) -> None:
                     title=f"AI agent config candidate: {display_path(target, path)}",
                     path=display_path(target, path),
                     evidence="matched execution-related terms: " + (", ".join(terms) if terms else "none"),
-                    risk="AI エージェントの hooks や commands が外部コマンドを呼ぶ可能性があります。値そのものは出力していません。",
-                    check_method="ファイル名と限定的なテキスト検索で、自動実行や外部コマンドらしき語を確認しました。",
-                    next_action="意図した hooks / commands だけが定義されているか、該当ファイルを手元で確認してください。",
+                    risk="AI agent hooks or commands may call external commands. Values are not printed.",
+                    check_method="Checked file names and limited text matches for auto-run or external-command terms.",
+                    next_action="Review the file locally and confirm only intended hooks or commands are defined.",
                 )
             )
             structured = _structured_config_summary(path, text)
@@ -86,9 +86,9 @@ def scan(target: Path, result: ScanResult) -> None:
                         title=f"AI agent structured config needs review: {display_path(target, path)}",
                         path=display_path(target, path),
                         evidence=structured,
-                        risk="AI agent の MCP server、hook、command、env/permissions などが定義されている可能性があります。値そのものは出力していません。",
-                        check_method="TOML/JSON として読める設定ファイルを構造化し、実行・権限・環境変数に関係するキー名だけを確認しました。",
-                        next_action="設定の意図、許可されたコマンド、外部連携、環境変数の出所を手元で確認してください。",
+                        risk="The config may define MCP servers, hooks, commands, env keys, or permissions. Values are not printed.",
+                        check_method="Parsed TOML/JSON settings and checked only key paths related to execution, permissions, or environment variables.",
+                        next_action="Review the intent, allowed commands, external integrations, and environment variable sources locally.",
                     )
                 )
 

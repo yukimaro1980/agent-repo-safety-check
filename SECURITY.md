@@ -8,7 +8,9 @@ This project is currently pre-1.0. Security fixes are handled on the `main` bran
 
 Please do not open a public issue containing secrets, tokens, private keys, or sensitive logs.
 
-For now, open a GitHub issue with a minimal reproduction that does not include real secrets. If the repository later grows a private reporting channel, this file will be updated.
+Use GitHub's private vulnerability reporting for sensitive reports when it is available on the repository.
+
+If the private reporting button is not visible yet, open a public GitHub issue that contains only a minimal, non-sensitive description and ask for a private reporting channel. Do not include exploit details, real secrets, private repository paths, customer data, or sensitive logs in a public issue.
 
 ## Scope
 

@@ -41,9 +41,9 @@ def scan(target: Path, result: ScanResult) -> None:
                 title=f"Local secret-like file exists: {path.name}",
                 path=rel,
                 evidence=f"file exists; tracked_by_git={tracked_state}; content not read",
-                risk="秘密情報を含む可能性があるファイルです。内容は出力していません。",
-                check_method="ファイル名パターンだけを確認し、可能な場合は git 管理対象かを確認しました。",
-                next_action="不要なら削除ではなく、まず内容と gitignore / 履歴への混入有無を確認してください。",
+                risk="This file may contain secret material. Contents are not printed.",
+                check_method="Checked filename patterns only, and checked Git tracked state when available.",
+                next_action="Review the file, gitignore, and Git history before deciding whether it should remain.",
             )
         )
 
@@ -59,9 +59,9 @@ def scan(target: Path, result: ScanResult) -> None:
                 title=f"Local archive file exists: {path.name}",
                 path=rel,
                 evidence=f"archive file exists; tracked_by_git={tracked_state}; content not read",
-                risk="秘密情報を退避したアーカイブの可能性があります。内容やパスワード有無は確認していません。",
-                check_method="zip / 7z のファイル名パターンだけを確認し、可能な場合は git 管理対象かを確認しました。",
-                next_action="パスワード付きか、元の平文ファイルが残っていないか、git 管理対象になっていないか確認してください。",
+                risk="This archive may contain secret material. Contents and password status were not inspected.",
+                check_method="Checked zip/7z filename patterns only, and checked Git tracked state when available.",
+                next_action="Confirm whether the archive is encrypted, whether plaintext sources remain, and whether it is tracked by Git.",
             )
         )
 

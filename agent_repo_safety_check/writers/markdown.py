@@ -12,9 +12,9 @@ def write_markdown(result: ScanResult, path: Path) -> None:
         "",
         "## Summary",
         "",
-        f"- 対象: {result.target}",
+        f"- Target: {result.target}",
         f"- Profile: {result.profile}",
-        f"- 総合結果: HIGH {counts['HIGH']} / MEDIUM {counts['MEDIUM']} / LOW {counts['LOW']} / INFO {counts['INFO']}",
+        f"- Overall: HIGH {counts['HIGH']} / MEDIUM {counts['MEDIUM']} / LOW {counts['LOW']} / INFO {counts['INFO']}",
         f"- HIGH: {counts['HIGH']}",
         f"- MEDIUM: {counts['MEDIUM']}",
         f"- LOW: {counts['LOW']}",
@@ -41,9 +41,9 @@ def write_markdown(result: ScanResult, path: Path) -> None:
             "",
             "## Notes",
             "",
-            "- このツールは read-only です。",
-            "- secrets の値は出力していません。",
-            "- 結果は危険確定ではなく確認候補です。",
+            "- This tool is read-only.",
+            "- Secret values are not printed.",
+            "- Findings are confirmation candidates, not proof of compromise.",
             "",
         ]
     )
@@ -53,10 +53,10 @@ def write_markdown(result: ScanResult, path: Path) -> None:
 def _finding_lines(finding: Finding) -> list[str]:
     return [
         f"### [{finding.severity}] {finding.title}",
-        f"- **場所**: {finding.path}",
-        f"- **事実**: {finding.evidence}",
-        f"- **リスク**: {finding.risk}",
-        f"- **確認方法**: {finding.check_method}",
-        f"- **次の一手**: {finding.next_action}",
+        f"- **Location**: {finding.path}",
+        f"- **Evidence**: {finding.evidence}",
+        f"- **Risk**: {finding.risk}",
+        f"- **Check**: {finding.check_method}",
+        f"- **Next step**: {finding.next_action}",
         "",
     ]

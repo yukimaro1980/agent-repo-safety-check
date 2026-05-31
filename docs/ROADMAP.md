@@ -19,10 +19,10 @@
   - `agent`: AI-agent safety preflight.
   - `oss`: publication and maintainer-readiness hygiene.
 
-## Before Public Release
+## Maintainer Readiness
 
 - Confirm the public repository uses `agent-repo-safety-check` consistently.
 - Run scans against representative repositories and summarize false positives.
 - Publish sample reports that do not contain secrets.
 - Confirm GitHub repository visibility and release process.
-- Prepare a short maintainer statement for OSS support programs.
+- Prepare a short maintainer statement that explains the project's safety model and intended maintenance workflow.

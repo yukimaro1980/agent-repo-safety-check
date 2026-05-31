@@ -26,9 +26,9 @@ def scan(target: Path, result: ScanResult) -> None:
                 title="VS Code tasks.json could not be parsed",
                 path=display_path(target, tasks_path),
                 evidence=f"parse failed: {type(exc).__name__}",
-                risk="folderOpen 自動実行や shell task の確認が不足する可能性があります。",
-                check_method=".vscode/tasks.json を JSON として読み込みました。",
-                next_action="コメントや末尾カンマを含む場合は後続で JSONC parser 対応を検討してください。",
+                risk="folderOpen auto-run or shell task checks may be incomplete.",
+                check_method="Tried to read .vscode/tasks.json as JSON.",
+                next_action="If the file uses comments or trailing commas, consider JSONC parser support later.",
             )
         )
         return
@@ -52,9 +52,9 @@ def scan(target: Path, result: ScanResult) -> None:
                     title=f"VS Code task runs on folder open: {task_name}",
                     path=display_path(target, tasks_path),
                     evidence="runOptions.runOn=folderOpen",
-                    risk="フォルダを開いただけでタスクが自動実行される可能性があります。",
-                    check_method=".vscode/tasks.json の runOptions.runOn を確認しました。",
-                    next_action="自動実行が必要なタスクか、実行コマンドが安全か確認してください。",
+                    risk="The task may run automatically when the folder is opened.",
+                    check_method="Checked runOptions.runOn in .vscode/tasks.json.",
+                    next_action="Confirm auto-run is needed and the command is safe.",
                 )
             )
 
@@ -65,9 +65,9 @@ def scan(target: Path, result: ScanResult) -> None:
                     title=f"VS Code task command needs review: {task_name}",
                     path=display_path(target, tasks_path),
                     evidence="matched command terms: " + ", ".join(terms),
-                    risk="shell やネットワーク取得、npm/npx 実行を含む可能性があります。コマンド値そのものは出力していません。",
-                    check_method=".vscode/tasks.json の task 定義を語句ベースで確認しました。",
-                    next_action="該当 task の command / args を手元で確認してください。",
+                    risk="The task may include shell execution, network fetches, or npm/npx execution. Command values are not printed.",
+                    check_method="Checked task definitions with term-based matching.",
+                    next_action="Review the task command and args locally.",
                 )
             )
 

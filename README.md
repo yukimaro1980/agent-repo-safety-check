@@ -81,7 +81,18 @@ Current checks include:
 
 `agent` is the default profile. Use it before letting an AI coding agent work in a repository. It keeps the report focused on executable configuration, automation, dependencies, and secret-like local files.
 
-`oss` includes all `agent` checks plus publication-readiness hygiene. Use it before making a repository public, preparing a release, or building evidence for maintainer support programs.
+`oss` includes all `agent` checks plus publication-readiness hygiene. Use it before making a repository public, preparing a release, or handing repository maintenance tasks to an AI agent.
+
+## Maintainer Workflow With Codex
+
+This tool is meant to be a small preflight step before asking Codex or another AI coding agent to work in a repository:
+
+1. Run `agent-repo-safety-check scan --target <repo>` locally.
+2. Review HIGH and MEDIUM findings before starting agent work.
+3. Use `--profile oss` before publication, release preparation, or broad contributor review.
+4. Keep the report local unless it has been checked for private paths and sensitive context.
+
+The scanner does not grant trust to an agent. It helps maintainers notice executable configuration, broad automation permissions, and secret-like files before an agent starts changing code.
 
 ## Example
 

@@ -27,9 +27,9 @@ def scan(target: Path, result: ScanResult) -> None:
                     title="package.json could not be parsed",
                     path=display_path(target, package_json),
                     evidence=f"JSON parse failed: {type(exc).__name__}",
-                    risk="npm scripts や依存関係の確認が不足する可能性があります。",
-                    check_method="package.json を JSON として読み込みました。",
-                    next_action="ファイルが意図した JSON 形式か確認してください。",
+                    risk="npm scripts and dependency checks may be incomplete.",
+                    check_method="Tried to read package.json as JSON.",
+                    next_action="Confirm the file is valid JSON.",
                 )
             )
             data = {}
@@ -44,9 +44,9 @@ def scan(target: Path, result: ScanResult) -> None:
                         title=f"npm lifecycle script detected: {script}",
                         path=display_path(target, package_json),
                         evidence=f"scripts.{script} exists; command={redact_secret_like_text(scripts.get(script, ''))}",
-                        risk="install や publish のタイミングでローカルコマンドが自動実行される可能性があります。",
-                        check_method="package.json の scripts キーを確認しました。",
-                        next_action="コマンド内容が信頼できるものか、依存導入時に実行されて問題ないか確認してください。",
+                        risk="Local commands may run automatically during install or publish.",
+                        check_method="Checked the scripts key in package.json.",
+                        next_action="Confirm the command is trusted and safe to run during dependency installation.",
                     )
                 )
 
@@ -63,9 +63,9 @@ def scan(target: Path, result: ScanResult) -> None:
                     title=f"Watch-list package candidate detected: {name}",
                     path=display_path(target, package_json),
                     evidence=f"dependency name matched: {name}",
-                    risk="MVP では侵害有無を断定せず、注意パッケージ候補として扱います。",
-                    check_method="package.json の依存パッケージ名を注意リストと照合しました。",
-                    next_action="lockfile 上の実バージョンと公式 advisory / OSV などを後続で確認してください。",
+                    risk="This is a watch-list candidate, not proof of compromise.",
+                    check_method="Compared package.json dependency names with the watch list.",
+                    next_action="Check the resolved version in the lockfile and review official advisories or OSV.",
                 )
             )
 
@@ -78,9 +78,9 @@ def scan(target: Path, result: ScanResult) -> None:
                     title="npm dependency uses floating version",
                     path=display_path(target, package_json),
                     evidence="matched floating versions: " + ", ".join(unpinned[:12]),
-                    risk="latest や * は再現性が弱く、将来の install 結果が変わる可能性があります。",
-                    check_method="package.json の dependency version を確認しました。",
-                    next_action="公開OSSでは lockfile や明示 version range を使う意図があるか確認してください。",
+                    risk="latest and * weaken reproducibility and can change future install results.",
+                    check_method="Checked package.json dependency version strings.",
+                    next_action="Confirm whether a lockfile or explicit version range should be used.",
                 )
             )
 
@@ -92,9 +92,9 @@ def scan(target: Path, result: ScanResult) -> None:
                     title="npm dependency uses remote URL or git reference",
                     path=display_path(target, package_json),
                     evidence="matched remote dependency specs: " + ", ".join(remote_deps[:12]),
-                    risk="registry package より供給元や更新内容の確認が難しい依存です。",
-                    check_method="package.json の dependency version 文字列を確認しました。",
-                    next_action="信頼できる upstream か、commit SHA 固定や integrity 確認が必要か確認してください。",
+                    risk="Remote or Git dependencies can be harder to verify than registry packages.",
+                    check_method="Checked package.json dependency version strings.",
+                    next_action="Confirm the upstream is trusted and whether commit SHA pinning or integrity checks are needed.",
                 )
             )
 
@@ -114,9 +114,9 @@ def scan(target: Path, result: ScanResult) -> None:
                     title=f"Watch-list package name found in {lockfile_name}",
                     path=display_path(target, lockfile_path),
                     evidence="matched package names: " + ", ".join(sorted(set(matches))),
-                    risk="lockfile に注意候補名が含まれます。MVP ではバージョン判定までは行いません。",
-                    check_method="lockfile のテキスト内に注意パッケージ名が含まれるか簡易確認しました。",
-                    next_action="該当パッケージの実バージョンと導入経路を確認してください。",
+                    risk="The lockfile includes a watch-list package name. Version-specific judgment is not performed.",
+                    check_method="Searched lockfile text for watch-list package names.",
+                    next_action="Confirm the actual version and dependency path for the matched package.",
                 )
             )
         remote_lock_terms = matched_terms(lock_text.lower(), ["git+", "github:", "http://", "https://", "ssh://"])
@@ -127,9 +127,9 @@ def scan(target: Path, result: ScanResult) -> None:
                     title=f"Remote dependency reference found in {lockfile_name}",
                     path=display_path(target, lockfile_path),
                     evidence="matched remote terms: " + ", ".join(sorted(set(remote_lock_terms))),
-                    risk="lockfile にリモート取得経路が含まれます。正当な resolved URL も含むため確認候補です。",
-                    check_method="lockfile のテキストから remote dependency らしき語を確認しました。",
-                    next_action="該当依存の導入元が意図どおりか確認してください。",
+                    risk="The lockfile includes remote retrieval paths. Some resolved URLs are legitimate, so this is a review candidate.",
+                    check_method="Searched lockfile text for remote dependency terms.",
+                    next_action="Confirm the matched dependency source is intentional.",
                 )
             )
 
