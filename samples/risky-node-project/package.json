@@ -1,0 +1,11 @@
+{
+  "name": "risky-node-project",
+  "private": true,
+  "scripts": {
+    "postinstall": "node scripts/setup.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "echarts-for-react": "latest"
+  }
+}

@@ -1,0 +1,37 @@
+[project]
+name = "agent-repo-safety-check"
+version = "0.1.0"
+description = "Read-only local repository safety checklist for AI-agent workflows."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = [
+    "typer>=0.12,<0.17",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Security",
+    "Topic :: Software Development :: Quality Assurance",
+]
+
+[project.urls]
+Homepage = "https://github.com/yukimaro1980/agent-repo-safety-check"
+Issues = "https://github.com/yukimaro1980/agent-repo-safety-check/issues"
+
+[project.scripts]
+agent-repo-safety-check = "agent_repo_safety_check.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["agent_repo_safety_check*"]
+
+[tool.uv]
+package = true
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"

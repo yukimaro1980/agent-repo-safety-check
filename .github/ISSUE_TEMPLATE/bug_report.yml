@@ -1,0 +1,36 @@
+name: Bug report
+description: Report incorrect scanner behavior without sharing secrets.
+title: "[bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug. Do not paste real secrets, tokens, private keys, or full `.env` files.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Describe the scanner behavior and why it looked wrong.
+    validations:
+      required: true
+  - type: textarea
+    id: minimal-fixture
+    attributes:
+      label: Minimal safe fixture
+      description: Provide a small redacted sample file or directory shape if possible.
+    validations:
+      required: false
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Python version, install method.
+    validations:
+      required: false

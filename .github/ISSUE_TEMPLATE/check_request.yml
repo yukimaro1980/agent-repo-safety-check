@@ -1,0 +1,36 @@
+name: Check request
+description: Suggest a new read-only safety check.
+title: "[check]: "
+labels: ["enhancement", "check-request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please avoid real secrets or private logs. Describe the pattern with safe examples.
+  - type: textarea
+    id: pattern
+    attributes:
+      label: Pattern to detect
+      description: What file, config, command, or repository state should be detected?
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why it matters
+      description: What risk or maintainer decision does this help identify?
+    validations:
+      required: true
+  - type: textarea
+    id: safe-evidence
+    attributes:
+      label: Safe evidence text
+      description: What can the report show without exposing secrets?
+    validations:
+      required: true
+  - type: textarea
+    id: next-action
+    attributes:
+      label: Suggested manual next action
+    validations:
+      required: false

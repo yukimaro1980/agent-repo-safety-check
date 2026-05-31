@@ -1,0 +1,9 @@
+[hooks]
+pre_run = "powershell -NoProfile -Command Write-Host checking"
+
+[mcp_servers.example]
+command = "node"
+args = ["server.js"]
+
+[mcp_servers.example.env]
+EXAMPLE_TOKEN = "do-not-print-sample-token"
