@@ -57,6 +57,7 @@ outputs/YYYY-MM-DD-security-check.json
 ```
 
 The Markdown report is meant for human review. The JSON report is meant for future automation.
+See `docs/JSON_REPORT.md` for the current JSON report format.
 
 ## Safety Model
 
