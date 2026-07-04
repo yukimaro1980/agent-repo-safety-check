@@ -1,5 +1,7 @@
 # agent-repo-safety-check
 
+Language: English | [日本語](README.ja.md)
+
 Read-only security and repository hygiene checklist for local projects, especially projects touched by AI coding agents.
 
 The tool does not try to prove compromise. It reports confirmation candidates: risky install hooks, broad automation permissions, agent hooks, local secret-like files, and OSS readiness gaps that a maintainer should review before publishing or letting an agent work in a repository.
@@ -106,6 +108,8 @@ uv run agent-repo-safety-check scan --target samples\risky-node-project --profil
 Expected findings include npm lifecycle scripts, GitHub Actions remote script execution, `pull_request_target`, VS Code folder-open tasks, and local secret-like/archive candidates when added during tests.
 
 A public-safe sample summary is available at `docs/sample-reports/risky-node-project-agent.md`.
+Additional public-safe summaries from real repository scans are available at
+`docs/sample-reports/public-repository-scan-examples.md`.
 
 ## Development
 
